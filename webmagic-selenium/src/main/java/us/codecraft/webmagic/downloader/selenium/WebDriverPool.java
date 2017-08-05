@@ -1,5 +1,6 @@
 package us.codecraft.webmagic.downloader.selenium;
 
+import org.apache.http.util.TextUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -80,10 +81,13 @@ class WebDriverPool {
 		// Fetch PhantomJS-specific configuration parameters
 		if (driver.equals(DRIVER_PHANTOMJS)) {
 			// "phantomjs_exec_path"
-			if (sConfig.getProperty("phantomjs_exec_path") != null) {
+			String execpath = sConfig.getProperty("phantomjs_exec_path");
+			if(TextUtils.isEmpty(execpath))
+				execpath = System.getProperty("phantomjs_exec_path");
+			if (!TextUtils.isEmpty(execpath)) {
 				sCaps.setCapability(
 						PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
-						sConfig.getProperty("phantomjs_exec_path"));
+						execpath);
 			} else {
 				throw new IOException(
 						String.format(
@@ -91,11 +95,14 @@ class WebDriverPool {
 								PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY));
 			}
 			// "phantomjs_driver_path"
-			if (sConfig.getProperty("phantomjs_driver_path") != null) {
+			String driverpath = sConfig.getProperty("phantomjs_driver_path");
+			if(TextUtils.isEmpty(driverpath))
+				driverpath = System.getProperty("phantomjs_driver_path");
+			if (!TextUtils.isEmpty(driverpath)) {
 				System.out.println("Test will use an external GhostDriver");
 				sCaps.setCapability(
 						PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_PATH_PROPERTY,
-						sConfig.getProperty("phantomjs_driver_path"));
+						driverpath);
 			} else {
 				System.out
 						.println("Test will use PhantomJS internal GhostDriver");
