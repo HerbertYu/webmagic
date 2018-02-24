@@ -17,7 +17,7 @@ public class GithubRepoPageMapper implements PageProcessor {
     private PageMapper<GithubRepo> githubRepoPageMapper = new PageMapper<GithubRepo>(GithubRepo.class);
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         page.addTargetRequests(page.getHtml().links().regex("(https://github\\.com/\\w+/\\w+)").all());
         page.addTargetRequests(page.getHtml().links().regex("(https://github\\.com/\\w+)").all());
         GithubRepo githubRepo = githubRepoPageMapper.get(page);
@@ -26,6 +26,7 @@ public class GithubRepoPageMapper implements PageProcessor {
         } else {
             page.putField("repo", githubRepo);
         }
+        return true;
 
     }
 

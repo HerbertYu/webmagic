@@ -19,9 +19,10 @@ public class GooglePlayProcessor implements PageProcessor {
 	private Site site;
 
 	@Override
-	public void process(Page page) {
+	public boolean process(Page page) {
 
 		page.putField("whole-html", page.getHtml().toString());
+		return true;
 
 	}
 

@@ -19,9 +19,10 @@ public class BaiduBaikePageProcessor implements PageProcessor {
             .setRetryTimes(3).setSleepTime(1000).setUseGzip(true);
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         page.putField("name", page.getHtml().css("dl.lemmaWgt-lemmaTitle h1","text").toString());
         page.putField("description", page.getHtml().xpath("//div[@class='lemma-summary']/allText()"));
+        return true;
     }
 
     @Override

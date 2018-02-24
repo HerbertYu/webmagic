@@ -48,8 +48,9 @@ public class SpiderTest {
             private AtomicInteger count = new AtomicInteger();
 
             @Override
-            public void process(Page page) {
+            public boolean process(Page page) {
                 page.setSkip(true);
+                return true;
             }
 
             @Override

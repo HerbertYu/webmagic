@@ -23,7 +23,7 @@ public class ConfigurablePageProcessor implements PageProcessor {
     }
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         for (ExtractRule extractRule : extractRules) {
             if (extractRule.isMulti()) {
                 List<String> results = page.getHtml().selectDocumentForList(extractRule.getSelector());
@@ -41,6 +41,7 @@ public class ConfigurablePageProcessor implements PageProcessor {
                 }
             }
         }
+        return true;
     }
 
     @Override

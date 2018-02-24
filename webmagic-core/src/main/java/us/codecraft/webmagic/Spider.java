@@ -411,12 +411,16 @@ public class Spider implements Runnable, Task {
 
     private boolean onDownloadSuccess(Request request, Page page) {
         if (site.getAcceptStatCode().contains(page.getStatusCode())) {
-            pageProcessor.process(page);
-            extractAndAddRequests(page, spawnUrl);
-            if (!page.getResultItems().isSkip()) {
-                for (Pipeline pipeline : pipelines) {
-                    pipeline.process(page.getResultItems(), this);
+            if (pageProcessor.process(page)) {
+                extractAndAddRequests(page, spawnUrl);
+                if (!page.getResultItems().isSkip()) {
+                    for (Pipeline pipeline : pipelines) {
+                        pipeline.process(page.getResultItems(), this);
+                    }
                 }
+            } else {
+                onDownloaderFail(request);
+                return false;
             }
         } else {
             logger.info("page status code error, page {} , code: {}", request.getUrl(), page.getStatusCode());
@@ -430,6 +434,8 @@ public class Spider implements Runnable, Task {
     private boolean onDownloaderFail(Request request) {
         if (site.getCycleRetryTimes() == 0) {
             sleep(site.getSleepTime());
+            // 重试次数超过后报告错误
+            onError(request);
         } else {
             // for cycle retry
             doCycleRetry(request);

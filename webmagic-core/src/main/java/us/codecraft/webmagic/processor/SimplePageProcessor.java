@@ -25,7 +25,7 @@ public class SimplePageProcessor implements PageProcessor {
     }
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         List<String> requests = page.getHtml().links().regex(urlPattern).all();
         //add urls to fetch
         page.addTargetRequests(requests);
@@ -34,6 +34,7 @@ public class SimplePageProcessor implements PageProcessor {
         page.putField("html", page.getHtml().toString());
         //extract by Readability
         page.putField("content", page.getHtml().smartContent());
+        return true;
     }
 
     @Override

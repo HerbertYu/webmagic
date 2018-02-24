@@ -24,7 +24,7 @@ public interface PageProcessor {
      *
      * @param page page
      */
-    public void process(Page page);
+    public boolean process(Page page);
 
     /**
      * get the site settings

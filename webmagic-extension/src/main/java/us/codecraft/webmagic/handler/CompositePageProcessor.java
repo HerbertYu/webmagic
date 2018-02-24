@@ -21,15 +21,16 @@ public class CompositePageProcessor implements PageProcessor {
     }
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         for (SubPageProcessor subPageProcessor : subPageProcessors) {
             if (subPageProcessor.match(page.getRequest())) {
                 SubPageProcessor.MatchOther matchOtherProcessorProcessor = subPageProcessor.processPage(page);
                 if (matchOtherProcessorProcessor == null || matchOtherProcessorProcessor != SubPageProcessor.MatchOther.YES) {
-                    return;
+                    return true;
                 }
             }
         }
+        return true;
     }
 
     public CompositePageProcessor setSite(Site site) {

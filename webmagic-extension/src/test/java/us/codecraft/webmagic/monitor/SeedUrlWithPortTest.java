@@ -24,7 +24,8 @@ public class SeedUrlWithPortTest {
 class TempProcessor implements PageProcessor {
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
+        return true;
 
     }
 

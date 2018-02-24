@@ -12,9 +12,10 @@ import us.codecraft.webmagic.pipeline.Pipeline;
  */
 public class GithubRepoProcessor implements PageProcessor {
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         page.putField("star",page.getHtml().xpath("//ul[@class='pagehead-actions']/li[2]//a[@class='social-count js-social-count']/text()").toString());
         page.putField("fork",page.getHtml().xpath("//ul[@class='pagehead-actions']/li[3]//a[@class='social-count']/text()").toString());
+        return true;
     }
 
     @Override

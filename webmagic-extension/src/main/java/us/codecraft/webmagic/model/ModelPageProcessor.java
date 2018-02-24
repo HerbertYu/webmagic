@@ -45,7 +45,7 @@ class ModelPageProcessor implements PageProcessor {
     }
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         for (PageModelExtractor pageModelExtractor : pageModelExtractorList) {
             if (extractLinks) {
                 extractLinks(page, pageModelExtractor.getHelpUrlRegionSelector(), pageModelExtractor.getHelpUrlPatterns());
@@ -61,6 +61,7 @@ class ModelPageProcessor implements PageProcessor {
         if (page.getResultItems().getAll().size() == 0) {
             page.getResultItems().setSkip(true);
         }
+        return true;
     }
 
     private void extractLinks(Page page, Selector urlRegionSelector, List<Pattern> urlPatterns) {
