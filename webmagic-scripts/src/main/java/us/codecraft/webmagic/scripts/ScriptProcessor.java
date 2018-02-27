@@ -47,7 +47,7 @@ public class ScriptProcessor implements PageProcessor {
     }
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         ScriptEngine engine = enginePool.getEngine();
         try {
             ScriptContext context = engine.getContext();
@@ -89,6 +89,7 @@ public class ScriptProcessor implements PageProcessor {
         } finally {
             enginePool.release(engine);
         }
+        return true;
     }
 
 

@@ -22,7 +22,7 @@ public class AngularJSProcessor implements PageProcessor {
     private static final String LIST_URL = "http://angularjs\\.cn/api/article/latest.*";
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         if (page.getUrl().regex(LIST_URL).match()) {
             List<String> ids = new JsonPathSelector("$.data[*]._id").selectList(page.getRawText());
             if (CollectionUtils.isNotEmpty(ids)) {
@@ -35,6 +35,7 @@ public class AngularJSProcessor implements PageProcessor {
             page.putField("content", new JsonPathSelector("$.data.content").select(page.getRawText()));
         }
 
+        return true;
     }
 
     @Override

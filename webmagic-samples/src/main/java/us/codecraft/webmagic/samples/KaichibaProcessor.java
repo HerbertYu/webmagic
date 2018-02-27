@@ -12,12 +12,13 @@ import us.codecraft.webmagic.processor.PageProcessor;
  */
 public class KaichibaProcessor implements PageProcessor {
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         //http://progressdaily.diandian.com/post/2013-01-24/40046867275
         int i = Integer.valueOf(page.getUrl().regex("shop/(\\d+)").toString()) + 1;
         page.addTargetRequest("http://kaichiba.com/shop/" + i);
         page.putField("title",page.getHtml().xpath("//Title"));
         page.putField("items", page.getHtml().xpath("//li[@class=\"foodTitle\"]").replace("^\\s+", "").replace("\\s+$", "").replace("<span>.*?</span>", ""));
+        return true;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ZipCodePageProcessor implements PageProcessor {
             .setSleepTime(100);
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         if (page.getUrl().toString().equals("http://www.ip138.com/post/")) {
             processCountry(page);
         } else if (page.getUrl().regex("http://www\\.ip138\\.com/\\d{6}[/]?$").toString() != null) {
@@ -32,6 +32,7 @@ public class ZipCodePageProcessor implements PageProcessor {
             processProvince(page);
         }
 
+        return true;
     }
 
     private void processCountry(Page page) {

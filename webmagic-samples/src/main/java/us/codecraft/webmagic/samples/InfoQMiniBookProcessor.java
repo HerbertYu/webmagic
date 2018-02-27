@@ -16,7 +16,7 @@ public class InfoQMiniBookProcessor implements PageProcessor {
     private Site site;
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         page.addTargetRequests(page.getHtml().links().regex("http://www\\.infoq\\.com/cn/minibooks/.*").all());
         List<String> all = page.getHtml().links().regex(".*\\.pdf").all();
         if (CollectionUtils.isNotEmpty(all)) {
@@ -24,6 +24,7 @@ public class InfoQMiniBookProcessor implements PageProcessor {
         } else {
             page.getResultItems().setSkip(true);
         }
+        return true;
     }
 
     @Override

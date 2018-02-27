@@ -25,7 +25,7 @@ public class ZhihuPageProcessor implements PageProcessor {
 
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         List<String> relativeUrl = page.getHtml().xpath("//li[@class='item clearfix']/div/a/@href").all();
         page.addTargetRequests(relativeUrl);
         relativeUrl = page.getHtml().xpath("//div[@id='zh-question-related-questions']//a[@class='question_link']/@href").all();
@@ -44,6 +44,7 @@ public class ZhihuPageProcessor implements PageProcessor {
         if(!exist){
             page.setSkip(true);
         }
+        return true;
     }
 
     @Override

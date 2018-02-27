@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class QzoneBlogProcessor implements PageProcessor {
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         //http://progressdaily.diandian.com/post/2013-01-24/40046867275
 
         //http://b1.cnc.qzone.qq.com/cgi-bin/blognew/get_abs?hostUin=233017404&uin=233017404&blogType=0&statYear=2013&source=0&statYear=2013&g_tk=291639571&g_tk=291639571&reqInfo=7&pos=0&num=15&source=0&rand=0.46480297949165106
@@ -20,6 +20,7 @@ public class QzoneBlogProcessor implements PageProcessor {
         page.addTargetRequests(requests);
         page.putField("title",page.getHtml().xpath("//div[@id='content']//h2/a"));
         page.putField("content",page.getHtml().smartContent());
+        return true;
     }
 
     @Override

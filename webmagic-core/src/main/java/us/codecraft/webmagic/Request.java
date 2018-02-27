@@ -29,7 +29,7 @@ public class Request implements Serializable {
     /**
      * Store additional information in extras.
      */
-    private Map<String, Object> extras;
+    private Map<String, String> extras;
 
     /**
      * cookies for current url, if not set use Site's cookies
@@ -78,16 +78,16 @@ public class Request implements Serializable {
         return this;
     }
 
-    public Object getExtra(String key) {
+    public String getExtra(String key) {
         if (extras == null) {
             return null;
         }
         return extras.get(key);
     }
 
-    public Request putExtra(String key, Object value) {
+    public Request putExtra(String key, String value) {
         if (extras == null) {
-            extras = new HashMap<String, Object>();
+            extras = new HashMap<String, String>();
         }
         extras.put(key, value);
         return this;
@@ -97,11 +97,11 @@ public class Request implements Serializable {
         return url;
     }
 
-    public Map<String, Object> getExtras() {
+    public Map<String, String> getExtras() {
         return extras;
     }
 
-    public Request setExtras(Map<String, Object> extras) {
+    public Request setExtras(Map<String, String> extras) {
         this.extras = extras;
         return this;
     }

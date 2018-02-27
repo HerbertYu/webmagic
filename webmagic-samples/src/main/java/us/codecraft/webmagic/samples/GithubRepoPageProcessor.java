@@ -14,7 +14,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(0);
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         page.addTargetRequests(page.getHtml().links().regex("(https://github\\.com/\\w+/\\w+)").all());
         page.addTargetRequests(page.getHtml().links().regex("(https://github\\.com/\\w+)").all());
         GithubRepo githubRepo = new GithubRepo();
@@ -27,6 +27,7 @@ public class GithubRepoPageProcessor implements PageProcessor {
         } else {
             page.putField("repo", githubRepo);
         }
+        return true;
     }
 
     @Override

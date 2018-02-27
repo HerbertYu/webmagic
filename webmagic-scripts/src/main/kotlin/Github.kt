@@ -16,7 +16,7 @@ class GithubRepoPageProcessor : PageProcessor {
 
     private val site = Site.me().setRetryTimes(3).setSleepTime(1000).setTimeOut(10000)
 
-    override fun process(page: Page) {
+    override fun process(page: Page): Boolean {
         page.addTargetRequests(page.html.links().regex("(https://github\\.com/[\\w\\-]+/[\\w\\-]+)").all())
         page.addTargetRequests(page.html.links().regex("(https://github\\.com/[\\w\\-])").all())
         page.putField("author", page.url.regex("https://github\\.com/(\\w+)/.*").toString())
@@ -26,6 +26,7 @@ class GithubRepoPageProcessor : PageProcessor {
             page.setSkip(true)
         }
         page.putField("readme", page.html.xpath("//div[@id='readme']/tidyText()"))
+        return true
     }
 
     override fun getSite(): Site {

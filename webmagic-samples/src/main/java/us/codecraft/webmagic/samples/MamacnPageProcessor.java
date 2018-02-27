@@ -20,7 +20,7 @@ public class MamacnPageProcessor implements PageProcessor {
     private Site site = Site.me().setDomain("www.mama.cn").setSleepTime(100);
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         List<Selectable> nodes = page.getHtml().xpath("//ul[@id=ma-thumb-list]/li").nodes();
         StringBuilder accum = new StringBuilder();
         for (Selectable node : nodes) {
@@ -32,6 +32,7 @@ public class MamacnPageProcessor implements PageProcessor {
             page.setSkip(true);
         }
         page.addTargetRequests(page.getHtml().links().regex("http://www\\.mama\\.cn/photo/.*\\.html").all());
+        return true;
     }
 
     @Override

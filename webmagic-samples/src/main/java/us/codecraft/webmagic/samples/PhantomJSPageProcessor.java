@@ -25,9 +25,10 @@ public class PhantomJSPageProcessor implements PageProcessor {
             .setRetryTimes(3).setSleepTime(1000);
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         if (page.getRawText() != null)
             page.putField("html", page.getRawText());
+        return true;
     }
 
     @Override

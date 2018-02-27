@@ -14,7 +14,7 @@ public class DiandianBlogProcessor implements PageProcessor {
     private Site site;
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         //a()表示提取链接，links()表示提取所有链接
         //getHtml()返回Html对象，支持链式调用
         //r()表示用正则表达式提取一条内容，regex()表示提取多条内容
@@ -29,6 +29,7 @@ public class DiandianBlogProcessor implements PageProcessor {
         page.putField("content", page.getHtml().smartContent());
         page.putField("date", page.getUrl().regex("post/(\\d+-\\d+-\\d+)/"));
         page.putField("id", page.getUrl().regex("post/\\d+-\\d+-\\d+/(\\d+)"));
+        return true;
     }
 
     @Override

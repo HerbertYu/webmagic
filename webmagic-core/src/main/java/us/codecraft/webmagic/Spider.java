@@ -445,14 +445,14 @@ public class Spider implements Runnable, Task {
     }
 
     private void doCycleRetry(Request request) {
-        Object cycleTriedTimesObject = request.getExtra(Request.CYCLE_TRIED_TIMES);
+        String cycleTriedTimesObject = request.getExtra(Request.CYCLE_TRIED_TIMES);
         if (cycleTriedTimesObject == null) {
-            addRequest(SerializationUtils.clone(request).setPriority(0).putExtra(Request.CYCLE_TRIED_TIMES, 1));
+            addRequest(SerializationUtils.clone(request).setPriority(0).putExtra(Request.CYCLE_TRIED_TIMES, String.valueOf(1)));
         } else {
-            int cycleTriedTimes = (Integer) cycleTriedTimesObject;
+            int cycleTriedTimes = Integer.parseInt(cycleTriedTimesObject);
             cycleTriedTimes++;
             if (cycleTriedTimes < site.getCycleRetryTimes()) {
-                addRequest(SerializationUtils.clone(request).setPriority(0).putExtra(Request.CYCLE_TRIED_TIMES, cycleTriedTimes));
+                addRequest(SerializationUtils.clone(request).setPriority(0).putExtra(Request.CYCLE_TRIED_TIMES, String.valueOf(cycleTriedTimes)));
             }
         }
         sleep(site.getRetrySleepTime());

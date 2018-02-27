@@ -12,7 +12,7 @@ import java.util.List;
  * @author code4crafer@gmail.com
  */
 public class AmanzonPageProcessor implements PageProcessor{
-    public void process(Page page) {
+    public boolean process(Page page) {
 
         Html html = page.getHtml();
         List<String> questionList =  html.xpath("//table[@class='tgCustomerCommunityCenterColumn']//div[@class='content']//table[@class='dataGrid']//tr").all();
@@ -39,6 +39,7 @@ public class AmanzonPageProcessor implements PageProcessor{
 
             }
         }
+        return true;
 
     }
 

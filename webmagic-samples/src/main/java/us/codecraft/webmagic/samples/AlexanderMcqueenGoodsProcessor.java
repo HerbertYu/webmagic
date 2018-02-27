@@ -19,7 +19,7 @@ public class AlexanderMcqueenGoodsProcessor implements PageProcessor {
     public static final String URL_POST = "http://www\\.alexandermcqueen\\.cn/cn/\\w+/.*\\.html";
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         if (page.getUrl().regex(URL_POST).match()) {
             page.putField("goodsName", page.getHtml().xpath("//div[@id='description']/h1/tidyText()"));
             if (page.getResultItems().get("goodsName") == null) {
@@ -51,6 +51,7 @@ public class AlexanderMcqueenGoodsProcessor implements PageProcessor {
             page.addTargetRequests(page.getHtml().links().regex(URL_POST).all(), 1000);
             page.addTargetRequests(page.getHtml().links().regex(URL_LIST).all(), 1);
         }
+        return true;
     }
 
     @Override

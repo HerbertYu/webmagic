@@ -22,7 +22,7 @@ public class SinaBlogProcessor implements PageProcessor {
                     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
 
     @Override
-    public void process(Page page) {
+    public boolean process(Page page) {
         //列表页
         if (page.getUrl().regex(URL_LIST).match()) {
             page.addTargetRequests(page.getHtml().xpath("//div[@class=\"articleList\"]").links().regex(URL_POST).all());
@@ -34,6 +34,7 @@ public class SinaBlogProcessor implements PageProcessor {
             page.putField("date",
                     page.getHtml().xpath("//div[@id='articlebody']//span[@class='time SG_txtc']").regex("\\((.*)\\)"));
         }
+        return true;
     }
 
     @Override
